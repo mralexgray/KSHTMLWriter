@@ -31,7 +31,7 @@
     return @"html";
 }
 
-- (void)testWritingSnippetsWithWriterClass:(Class)class
+- (void)testWritingSnippetsWithWriterClass:(Class)klass
 {
     NSURL* snippetURL = self.parameterisedTestDataItem;
 
@@ -45,7 +45,7 @@
     [element setInnerHTML:snippetHTML];
     
     KSStringWriter* output = [[KSStringWriter alloc] init];
-    KSHTMLWriter* writer = [[class alloc] initWithOutputWriter:output];
+    KSHTMLWriter* writer = [[klass alloc] initWithOutputWriter:output];
     KSXMLWriterDOMAdaptor* adaptor = [[KSXMLWriterDOMAdaptor alloc] initWithXMLWriter:writer];
     
     [adaptor writeInnerOfDOMNode:element];

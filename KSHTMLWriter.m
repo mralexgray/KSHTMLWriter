@@ -53,7 +53,7 @@ NSString *KSHTMLWriterDocTypeHTML_5 = @"html";
     {
         [self setDocType:KSHTMLWriterDocTypeHTML_5];
         _IDs = [[NSMutableSet alloc] init];
-        _classNames = [[NSMutableArray alloc] init];
+        _classNames = NSMutableArray.new;
     }
     
     return self;
@@ -134,11 +134,13 @@ NSString *KSHTMLWriterDocTypeHTML_5 = @"html";
     [_classNames addObjectsFromArray:classNames];
 }
 
+- (void)pushClass:(id)classOrArray { [classOrArray isKindOfClass:NSArray.class] ? [self pushClassNames:classOrArray] : [self pushClassName:classOrArray]; }
+
 - (void)pushAttribute:(NSString *)attribute value:(id)value;
 {
     if ([attribute isEqualToString:@"class"])
     {
-        return [self pushClassName:value];
+        return [self pushClass:value];
     }
     
     // Keep track of IDs in use

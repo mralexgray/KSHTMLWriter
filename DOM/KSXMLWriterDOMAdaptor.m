@@ -542,8 +542,6 @@
 
 @end
 
-
-
 @implementation DOMCDATASection (KSDOMToHTMLWriter)
 
 - (DOMNode *)writeData:(NSString *)data toHTMLWriter:(KSXMLWriterDOMAdaptor *)adaptor;

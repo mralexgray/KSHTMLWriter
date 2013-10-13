@@ -26,7 +26,7 @@
     return @"Snippets/Pretty";
 }
 
-- (void)testPrettyPrintSnippetsWithWriterClass:(Class)class
+- (void)testPrettyPrintSnippetsWithWriterClass:(Class)klass
 {
     NSURL* snippetURL = self.parameterisedTestDataItem;
     
@@ -41,7 +41,7 @@
     [element setInnerHTML:inputHTML];
     
     KSStringWriter* output = [[KSStringWriter alloc] init];
-    KSHTMLWriter* writer = [[class alloc] initWithOutputWriter:output];
+    KSHTMLWriter* writer = [[klass alloc] initWithOutputWriter:output];
     KSXMLWriterDOMAdaptor* adaptor = [[KSXMLWriterDOMAdaptor alloc] initWithXMLWriter:writer options:KSXMLWriterDOMAdaptorPrettyPrint];
     
     [adaptor writeInnerOfDOMNode:element];

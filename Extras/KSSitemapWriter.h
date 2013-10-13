@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import <KSHTMLWriterFramework/KSHTMLWriterFramework.h>
+#import <KSHTMLWriter/KSHTMLWriter.h>
 
 
 extern NSString * const KSSitemapChangeMapFrequencyAlways;

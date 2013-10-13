@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'KSHTMLWriterFramework' target in the 'KSHTMLWriterFramework' project
+// Prefix header for all source files of the 'KSHTMLWriter' target in the 'KSHTMLWriter' project
 //
 
 #ifdef __OBJC__

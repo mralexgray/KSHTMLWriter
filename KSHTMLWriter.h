@@ -26,23 +26,17 @@
 #import "KSXMLWriter.h"
 
 
-extern NSString *KSHTMLWriterDocTypeHTML_4_01_Strict;
-extern NSString *KSHTMLWriterDocTypeHTML_4_01_Transitional;
-extern NSString *KSHTMLWriterDocTypeHTML_4_01_Frameset;
-extern NSString *KSHTMLWriterDocTypeXHTML_1_0_Strict;
-extern NSString *KSHTMLWriterDocTypeXHTML_1_0_Transitional;
-extern NSString *KSHTMLWriterDocTypeXHTML_1_0_Frameset;
-extern NSString *KSHTMLWriterDocTypeXHTML_1_1;
-extern NSString *KSHTMLWriterDocTypeHTML_5;
+extern NSString 	*KSHTMLWriterDocTypeHTML_4_01_Strict,			*KSHTMLWriterDocTypeHTML_4_01_Transitional,
+						*KSHTMLWriterDocTypeHTML_4_01_Frameset,		*KSHTMLWriterDocTypeXHTML_1_0_Strict,
+						*KSHTMLWriterDocTypeXHTML_1_0_Transitional,	*KSHTMLWriterDocTypeXHTML_1_0_Frameset,
+						*KSHTMLWriterDocTypeXHTML_1_1,					*KSHTMLWriterDocTypeHTML_5;
 
 
-@interface KSHTMLWriter : KSXMLWriter
-{
+@interface KSHTMLWriter : KSXMLWriter	{
   @private
     NSString        *_docType;
     BOOL            _isXHTML;
     NSMutableSet    *_IDs;
-    
     NSMutableArray  *_classNames;
 }
 
@@ -58,16 +52,15 @@ extern NSString *KSHTMLWriterDocTypeHTML_5;
 
 // Whether empty elements should be written as <FOO> or <FOO />
 // Default is YES. There's no setter method; instead, specify with -startDocumentWithDocType:encoding: or when initializing.
-- (BOOL)isXHTML;
-+ (BOOL)isDocTypeXHTML:(NSString *)docType;
-
+- (BOOL) isXHTML;
++ (BOOL) isDocTypeXHTML:(NSString *)docType;
 
 #pragma mark CSS Class Name
 // Class names are accumulated and written automatically as an attribute of the next element started
 // You can also push a class name using -pushAttribute:value: if attribute is 'class'
-- (void)pushClassName:(NSString *)className;
-- (void)pushClassNames:(NSArray *)classNames;
-
+- (void) pushClassName:(NSString *)className;
+- (void) pushClassNames:(NSArray *)classNames;
+- (void) pushClass:(id)classOrArray;
 
 #pragma mark HTML Fragments
 // Any newlines in the HTML will be adjusted to account for current indentation level, but that's all
@@ -169,3 +162,34 @@ extern NSString *KSHTMLWriterDocTypeHTML_5;
 
 @end
 
+#ifdef ATOZFRAMEWORK
+
+#import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
+
+
+// CSS
+#import "KSCSSWriter.h"
+
+// DOM
+#import "KSXMLWriterDOMAdaptor.h"
+
+// XML
+#import "KSXMLAttributes.h"
+//#import "KSXMLWriter.h"
+#import "KSStringXMLEntityEscaping.h"
+
+// HTML
+//#import "KSHTMLWriter.h"
+#import "KSHTMLWriter+Convenience.h"
+
+// KSWriter
+#import "KSBlockWriter.h"
+#import "KSBufferedWriter.h"
+#import "KSForwardingWriter.h"
+#import "KSMutableDataWriter.h"
+#import "KSOutputStreamWriter.h"
+#import "KSStringWriter.h"
+#import "KSWriter.h"
+
+#endif

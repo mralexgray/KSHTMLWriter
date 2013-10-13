@@ -70,7 +70,7 @@
     if (self = [super initWithOutputWriter:output])
     {
         _attributes = [[KSXMLAttributes alloc] init];
-        _openElements = [[NSMutableArray alloc] init];
+        _openElements = NSMutableArray.new;
         
         // Inherit encoding where possible
         _encoding = ([output respondsToSelector:@selector(encoding)] ?

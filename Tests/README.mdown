@@ -38,14 +38,14 @@ At the moment, the NSDictionaries are hand-written, and are read from the "Compo
 These tests run through directories full of hmtl "snippets", performing some action on each snippet
 and then checking it against an expected outcome.
 
-Before running any of these tests the framework loads a stub html document into a hidden web view. 
+Before running a ny of these tests the framework loads a stub html document into a hidden web view. 
 The stub document (defined in Stub.html) is just an empty web page.
 
-The snippet tests use this web view as the host for testing each html stub. They first inject the stub into the
-document using WebKit DOM methods. They then grab back the DOM representation of the stub, and use a HSHTMLDOMAdaptor
-to write it back out as XML/HTML.
+The snik out as XML/HTML.
 
-This actual output is then compared against an expected output.
+ppet tests use this web view as the host for testing each html stub. They first inject the stub into the
+document using WebKit DOM methods. They then grab back the DOM representation of the stub, and use a HSHTMLDOMAdaptor
+to write it bacThis actual output is then compared against an expected output.
 
 There are two types of snippets that are tested. 
 

@@ -31,22 +31,22 @@
 #pragma mark Element Primitives
 
 //   attribute="value"
-- (void)writeAttribute:(NSString *)attribute
+- (void) writeAttribute:(NSString*)attribute
                  value:(id)value;
 
 //  Starts tracking -writeString: calls to see if element is empty
-- (void)didStartElement;
+- (void) didStartElement;
 
 //  >
 //  Then increases indentation level
-- (void)closeStartTag;
+- (void) closeStartTag;
 
 //   />
-- (void)closeEmptyElementTag;             
+- (void) closeEmptyElementTag;             
 
-- (void)writeEndTag:(NSString *)tagName;    // primitive version that ignores open elements stack
+- (void) writeEndTag:(NSString*)tagName;    // primitive version that ignores open elements stack
 
-- (BOOL)elementCanBeEmpty:(NSString *)tagName;  // YES for everything in pure XML
+- (BOOL)elementCanBeEmpty:(NSString*)tagName;  // YES for everything in pure XML
 
 @property(nonatomic, readwrite) NSStringEncoding encoding;   // default is UTF-8
 
@@ -54,7 +54,7 @@
 
 
 @interface KSXMLAttributes (KSXMLWriter)
-- (void)writeAttributes:(KSXMLWriter *)writer;
+- (void) writeAttributes:(KSXMLWriter*)writer;
 @end
 
 
@@ -74,7 +74,7 @@
         
         // Inherit encoding where possible
         _encoding = ([output respondsToSelector:@selector(encoding)] ?
-                     [(KSXMLWriter *)output encoding] :
+                     [(KSXMLWriter*)output encoding] :
                      NSUTF8StringEncoding);
     }
     return self;
@@ -90,7 +90,7 @@
     return self;
 }
 
-- (void)dealloc
+- (void) dealloc
 {    
     [_openElements release];
     [_attributes release];
@@ -100,17 +100,17 @@
 
 #pragma mark Writer Status
 
-- (void)close;
+- (void) close;
 {
     [self flush];
     [super close];
 }
 
-- (void)flush; { }
+- (void) flush; { }
 
 #pragma mark Document
 
-- (void)startDocumentWithDocType:(NSString *)docType encoding:(NSStringEncoding)encoding;
+- (void) startDocumentWithDocType:(NSString*)docType encoding:(NSStringEncoding)encoding;
 {
     [self setEncoding:encoding];    // do first so -writeString: knows what's going on
     
@@ -122,7 +122,7 @@
 
 #pragma mark Characters
 
-- (void)writeCharacters:(NSString *)string;
+- (void) writeCharacters:(NSString*)string;
 {
     // Quotes are acceptable characters outside of attribute values
     [self.class writeString:string escapeXMLEntitiesIncludingQuotes:NO usingBlock:^(NSString *string, NSRange range) {
@@ -132,7 +132,7 @@
     }];
 }
 
-+ (NSString *)stringFromCharacters:(NSString *)characters;
++ (NSString*)stringFromCharacters:(NSString*)characters;
 {
 	__block NSString *result = @"";
     
@@ -155,14 +155,14 @@
 
 #pragma mark Elements
 
-- (void)writeElement:(NSString *)name content:(void (^)(void))content;
+- (void) writeElement:(NSString*)name content:(void (^)(void))content;
 {
     [self startElement:name];
     if (content) content();
     [self endElement];
 }
 
-- (void)writeElement:(NSString *)name attributes:(NSDictionary *)attributes content:(void (^)(void))content;
+- (void) writeElement:(NSString*)name attributes:(NSDictionary*)attributes content:(void (^)(void))content;
 {
     for (NSString *aName in attributes)
     {
@@ -173,22 +173,22 @@
     [self writeElement:name content:content];
 }
 
-- (void)writeElement:(NSString *)elementName text:(NSString *)text;
+- (void) writeElement:(NSString*)elementName text:(NSString*)text;
 {
     [self writeElement:elementName content:^{
         [self writeCharacters:text];
     }];
 }
 
-- (void)willStartElement:(NSString *)element; { /* for subclassers */ }
+- (void) willStartElement:(NSString*)element; { /* for subclassers */ }
 
-- (void)pushElement:(NSString *)element;
+- (void) pushElement:(NSString*)element;
 {
     // Private method so that Sandvox can work for now
     [_openElements addObject:element];
 }
 
-- (void)popElement;
+- (void) popElement;
 {
     _elementIsEmpty = NO;
     
@@ -200,12 +200,12 @@
 
 #pragma mark Current Element
 
-- (void)pushAttribute:(NSString *)attribute value:(id)value; // call before -startElement:
+- (void) pushAttribute:(NSString*)attribute value:(id)value; // call before -startElement:
 {
     [_attributes addAttribute:attribute value:value];
 }
 
-- (KSXMLAttributes *)currentAttributes;
+- (KSXMLAttributes*)currentAttributes;
 {
     KSXMLAttributes *result = [[_attributes copy] autorelease];
     return result;
@@ -218,7 +218,7 @@
 
 #pragma mark Attributes
 
-- (void)writeAttributeValue:(NSString *)value;
+- (void) writeAttributeValue:(NSString*)value;
 {
     // Make sure to escape the quote mark
     [self.class writeString:value escapeXMLEntitiesIncludingQuotes:NO usingBlock:^(NSString *string, NSRange range) {
@@ -228,7 +228,7 @@
     }];
 }
 
-+ (NSString *)stringFromAttributeValue:(NSString *)value;
++ (NSString*)stringFromAttributeValue:(NSString*)value;
 {
     __block NSString *result = @"";
     
@@ -249,7 +249,7 @@
     return result;
 }
 
-- (void)writeAttribute:(NSString *)attribute
+- (void) writeAttribute:(NSString*)attribute
                  value:(id)value;
 {
 	NSString *valueString = [value description];
@@ -263,7 +263,7 @@
 
 #pragma mark Whitespace
 
-- (void)startNewline;   // writes a newline character and the tabs to match -indentationLevel
+- (void) startNewline;   // writes a newline character and the tabs to match -indentationLevel
 {
     [self writeString:@"\n"];
     
@@ -281,26 +281,26 @@
 
 #pragma mark Comments
 
-- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
+- (void) writeComment:(NSString*)comment;   // escapes the string, and wraps in a comment tag
 {
     [self openComment];
     [self writeAttributeValue:comment];
     [self closeComment];
 }
 
-- (void)openComment;
+- (void) openComment;
 {
     [self writeString:@"<!--"];
 }
 
-- (void)closeComment;
+- (void) closeComment;
 {
     [self writeString:@"-->"];
 }
 
 #pragma mark CDATA
 
-- (void)writeCDATAWithContentBlock:(void (^)(void))content;
+- (void) writeCDATAWithContentBlock:(void (^)(void))content;
 {
     [self startCDATA];
     content();
@@ -311,25 +311,25 @@
 
 @synthesize indentationLevel = _indentation;
 
-- (void)increaseIndentationLevel;
+- (void) increaseIndentationLevel;
 {
     [self setIndentationLevel:[self indentationLevel] + 1];
 }
 
-- (void)decreaseIndentationLevel;
+- (void) decreaseIndentationLevel;
 {
     [self setIndentationLevel:[self indentationLevel] - 1];
 }
 
 #pragma mark Validation
 
-- (BOOL)validateElement:(NSString *)element;
+- (BOOL)validateElement:(NSString*)element;
 {
     NSParameterAssert(element);
     return YES;
 }
 
-- (NSString *)validateAttribute:(NSString *)name value:(NSString *)value ofElement:(NSString *)element;
+- (NSString*)validateAttribute:(NSString*)name value:(NSString*)value ofElement:(NSString*)element;
 {
     NSParameterAssert(name);
     NSParameterAssert(element);
@@ -338,25 +338,25 @@
 
 #pragma mark Elements Stack
 
-- (BOOL)canWriteElementInline:(NSString *)element;
+- (BOOL)canWriteElementInline:(NSString*)element;
 {
     // In standard XML, no elements can be inline, unless it's the start of the doc
     return (_inlineWritingLevel == 0 || [[self class] shouldPrettyPrintElementInline:element]);
 }
 
-+ (BOOL)shouldPrettyPrintElementInline:(NSString *)element;
++ (BOOL)shouldPrettyPrintElementInline:(NSString*)element;
 {
     return NO;
 }
 
-- (NSArray *)openElements; { return [[_openElements copy] autorelease]; }
+- (NSArray*)openElements; { return [[_openElements copy] autorelease]; }
 
 - (NSUInteger)openElementsCount;
 {
     return [_openElements count];
 }
 
-- (BOOL)hasOpenElement:(NSString *)tagName;
+- (BOOL)hasOpenElement:(NSString*)tagName;
 {
     // Seek an open element, matching case insensitively
     for (NSString *anElement in _openElements)
@@ -370,35 +370,35 @@
     return NO;
 }
 
-- (NSString *)topElement;
+- (NSString*)topElement;
 {
     return [_openElements lastObject];
 }
 
 #pragma mark Element Primitives
 
-- (void)didStartElement;
+- (void) didStartElement;
 {
     // For elements which can't be empty, might as well go ahead and close the start tag now
     _elementIsEmpty = [self elementCanBeEmpty:[self topElement]];
     if (!_elementIsEmpty) [self closeStartTag];
 }
 
-- (void)closeStartTag;
+- (void) closeStartTag;
 {
     [self writeString:@">"];
 }
 
-- (void)closeEmptyElementTag; { [self writeString:@" />"]; }
+- (void) closeEmptyElementTag; { [self writeString:@" />"]; }
 
-- (void)writeEndTag:(NSString *)tagName;    // primitive version that ignores open elements stack
+- (void) writeEndTag:(NSString*)tagName;    // primitive version that ignores open elements stack
 {
     [self writeString:@"</"];
     [self writeString:tagName];
     [self writeString:@">"];
 }
 
-- (BOOL)elementCanBeEmpty:(NSString *)tagName; { return YES; }
+- (BOOL)elementCanBeEmpty:(NSString*)tagName; { return YES; }
 
 #pragma mark Inline Writing
 
@@ -414,7 +414,7 @@
     return ([self openElementsCount] >= _inlineWritingLevel);
 }
 
-- (void)startWritingInline;
+- (void) startWritingInline;
 {
     // Is it time to switch over to inline writing? (we may already be writing inline, so can ignore request)
     if (_inlineWritingLevel >= NSNotFound || _inlineWritingLevel == 0)
@@ -423,7 +423,7 @@
     }
 }
 
-- (void)stopWritingInline; { _inlineWritingLevel = NSNotFound; }
+- (void) stopWritingInline; { _inlineWritingLevel = NSNotFound; }
 
 static NSCharacterSet *sCharactersToEntityEscapeWithQuot;
 static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
@@ -452,7 +452,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 // So I think we want to gradually shift over to being explicit when we know when it's OK or not.
 //
 // Return value indicates whether any escaping actually needed doing
-+ (void)writeString:(NSString *)string escapeXMLEntitiesIncludingQuotes:(BOOL)escapeQuotes usingBlock:(void (^)(NSString *string, NSRange range))block;
++ (void)writeString:(NSString*)string escapeXMLEntitiesIncludingQuotes:(BOOL)escapeQuotes usingBlock:(void (^)(NSString *string, NSRange range))block;
 {
     NSCharacterSet *charactersToEntityEscape = (escapeQuotes ?
                                                 sCharactersToEntityEscapeWithQuot :
@@ -516,7 +516,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 #pragma mark String Encoding
 
 @synthesize encoding = _encoding;
-- (void)setEncoding:(NSStringEncoding)encoding;
+- (void) setEncoding:(NSStringEncoding)encoding;
 {
     if (![[self class] isStringEncodingAvailable:encoding])
     {
@@ -539,7 +539,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 			encoding == NSUnicodeStringEncoding);
 }
 
-- (void)writeString:(NSString *)string;
+- (void) writeString:(NSString*)string;
 {
 	NSParameterAssert(nil != string); 
     // Is this string some element content? If so, the element is no longer empty so must close the tag and mark as such
@@ -604,7 +604,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
             // A) Can dispose of it straight away rather than filling autorelease pool
             // B) range doesn't need casting
             CFStringRef substring = CFStringCreateWithSubstring(NULL, (CFStringRef)string, range);
-            [super writeString:(NSString *)substring];
+            [super writeString:(NSString*)substring];
             CFRelease(substring);
             
             break;
@@ -615,12 +615,12 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 #pragma mark -
 #pragma mark Pre-Blocks Support
 
-- (void)startElement:(NSString *)elementName;
+- (void) startElement:(NSString*)elementName;
 {
     [self startElement:elementName writeInline:[self canWriteElementInline:elementName]];
 }
 
-- (void)startElement:(NSString *)elementName writeInline:(BOOL)writeInline;
+- (void) startElement:(NSString*)elementName writeInline:(BOOL)writeInline;
 {
     // Can only write suitable tags inline if containing element also allows it
     if (!writeInline)
@@ -649,7 +649,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
     [self increaseIndentationLevel];
 }
 
-- (void)endElement;
+- (void) endElement;
 {
     // Handle whitespace
 	[self decreaseIndentationLevel];
@@ -669,12 +669,12 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
     }
 }
 
-- (void)startCDATA;
+- (void) startCDATA;
 {
     [self writeString:@"<![CDATA["];
 }
 
-- (void)endCDATA;
+- (void) endCDATA;
 {
     [self writeString:@"]]>"];
 }
@@ -687,7 +687,7 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 
 @implementation KSXMLAttributes (KSXMLWriter)
 
-- (void)writeAttributes:(KSXMLWriter *)writer;
+- (void) writeAttributes:(KSXMLWriter*)writer;
 {
     for (NSUInteger i = 0; i < [_attributes count]; i+=2)
     {

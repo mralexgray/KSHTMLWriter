@@ -22,7 +22,7 @@
 
 #pragma mark - Helpers
 
-- (void)writer:(KSXMLWriter*)writer performActions:(NSArray*)actions
+- (void) writer:(KSXMLWriter*)writer performActions:(NSArray*)actions
 {
     for (NSDictionary* action in actions)
     {
@@ -69,7 +69,7 @@ typedef enum
     TestHTML
 } TestType;
 
-- (void)testCompoundWithTestType:(TestType)type
+- (void) testCompoundWithTestType:(TestType)type
 {
     Class class;
     NSString* expectedKey;
@@ -102,12 +102,12 @@ typedef enum
     [output release];
 }
 
-- (void)parameterisedTestCompoundXML
+- (void) parameterisedTestCompoundXML
 {
     [self testCompoundWithTestType:TestXML];
 }
 
-- (void)parameterisedTestCompoundHTML
+- (void) parameterisedTestCompoundHTML
 {
     [self testCompoundWithTestType:TestHTML];
 }

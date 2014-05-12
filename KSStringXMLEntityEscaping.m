@@ -27,7 +27,7 @@
 
 
 @interface KSXMLWriter (KSXMLWriterSecretsIKnow)
-- (void)writeStringByEscapingXMLEntities:(NSString *)string escapeQuot:(BOOL)escapeQuotes;
+- (void) writeStringByEscapingXMLEntities:(NSString*)string escapeQuot:(BOOL)escapeQuotes;
 @end
 
 
@@ -43,7 +43,7 @@
 /*	These two methods are simple wrappers for CoreFoundation
  */
 
-- (NSString *)stringByEscapingXMLEntities:(NSDictionary *)entities
+- (NSString*)stringByEscapingXMLEntities:(NSDictionary*)entities
 {
 	NSString *result = NSMakeCollectable(CFXMLCreateStringByEscapingEntities(NULL,
                                                                              (CFStringRef)self,
@@ -53,17 +53,17 @@
 
 #endif
 
-- (NSString *)stringByUnescapingXMLEntities:(NSDictionary *)entities
+- (NSString*)stringByUnescapingXMLEntities:(NSDictionary*)entities
 {
 	
 #if TARGET_OS_IPHONE
 	
 	const xmlChar *unescapedXMLString = xmlStringDecodeEntities(xmlNewParserCtxt(),
-																(const xmlChar *)[self UTF8String],
+																(const xmlChar*)[self UTF8String],
 																XML_SUBSTITUTE_REF,
 																0, 0, 0);
 	
-	NSString *result = [NSString stringWithUTF8String:(const char *)unescapedXMLString];
+	NSString *result = [NSString stringWithUTF8String:(const char*)unescapedXMLString];
 	return result;
 	
 #else
@@ -93,18 +93,18 @@
     return self;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     [_output release];
     [super dealloc];
 }
 
-- (void)writeString:(NSString *)string;
+- (void) writeString:(NSString*)string;
 {
     [_output writeCharacters:string];
 }
 
-- (void)close;
+- (void) close;
 {
     [_output release]; _output = nil;
 }

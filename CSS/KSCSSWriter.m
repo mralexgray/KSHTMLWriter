@@ -28,20 +28,20 @@
 
 @implementation KSCSSWriter
 
-- (void)writeCSSString:(NSString *)cssString;
+- (void) writeCSSString:(NSString*)cssString;
 {
     [self writeString:cssString];
     if (![cssString hasSuffix:@"\n"]) [self writeString:@"\n"];
     [self writeString:@"\n"];
 }
 
-- (void)writeIDSelector:(NSString *)ID;
+- (void) writeIDSelector:(NSString*)ID;
 {
     [self writeString:@"#"];
     [self writeString:ID];
 }
 
-- (void)writeDeclarationBlock:(NSString *)declarations;
+- (void) writeDeclarationBlock:(NSString*)declarations;
 {
     [self writeString:@" {"];
     [self writeString:declarations];

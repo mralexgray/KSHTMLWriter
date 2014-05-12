@@ -40,6 +40,8 @@ NSString
 @interface 		 KSHTMLWriter () @property(nonatomic, copy, readwrite) NSString *docType; @end
 @implementation KSHTMLWriter													 @synthesize docType = _docType;
 
++ (instancetype) newWriter:(id<KSWriter>)o { return [self.class.alloc initWithOutputWriter:o]; }
+
 #pragma mark Creating an HTML Writer
 
 - (id)initWithOutputWriter:(id <KSWriter>)output;	{
@@ -49,50 +51,50 @@ NSString
 	_IDs = NSMutableSet.new; _classNames = NSMutableArray.new; return  self;
 }
 
-- (id)initWithOutputWriter:(id <KSWriter>)output docType:(NSString *)docType encoding:(NSStringEncoding)encoding;	{
+- (id)initWithOutputWriter:(id <KSWriter>)output docType:(NSString*)docType encoding:(NSStringEncoding)encoding;	{
 	self = [self initWithOutputWriter:output encoding:encoding]; if (!self) return nil;
 	[self setDocType:docType];
 	return self;
 }
 
-- (void)dealloc	{    [_IDs release];    [_classNames release];    [super dealloc]; }
+- (void) dealloc	{    [_IDs release];    [_classNames release];    [super dealloc]; }
 
 #pragma mark DTD
 
-- (void)startDocumentWithDocType:(NSString*)dType encoding:(NSStringEncoding)enc { [self setDocType:dType]; [super startDocumentWithDocType:dType encoding:enc]; }
+- (void) startDocumentWithDocType:(NSString*)dType encoding:(NSStringEncoding)enc { [self setDocType:dType]; [super startDocumentWithDocType:dType encoding:enc]; }
 
-- (void)setDocType:(NSString *)docType;	{    docType = [docType copy]; [_docType release]; _docType = docType; _isXHTML = [self.class isDocTypeXHTML:docType]; }
+- (void) setDocType:(NSString*)docType;	{    docType = [docType copy]; [_docType release]; _docType = docType; _isXHTML = [self.class isDocTypeXHTML:docType]; }
 - (BOOL)isXHTML; { return _isXHTML; }
-+ (BOOL)isDocTypeXHTML:(NSString *)docType;
++ (BOOL)isDocTypeXHTML:(NSString*)docType;
 {
 	return ![@[KSHTMLWriterDocTypeHTML_4_01_Strict,KSHTMLWriterDocTypeHTML_4_01_Transitional,KSHTMLWriterDocTypeHTML_4_01_Frameset] containsObject:docType];
 }
 
 #pragma mark CSS Class Name
 
-- (NSString *)currentElementClassName	{ return _classNames.count ? [_classNames componentsJoinedByString:@" "] : nil; }
+- (NSString*)currentElementClassName	{ return _classNames.count ? [_classNames componentsJoinedByString:@" "] : nil; }
 
-- (void)pushClassName:(NSString *)className	{
+- (void) pushClassName:(NSString*)className	{
 #ifdef DEBUG
 	[_classNames containsObject:className] ? NSLog(@"Adding class \"%@\" to an element twice", className) : nil;
 #endif
 	[_classNames addObject:className];
 }
 
-- (void)pushClassNames:(NSArray *)classNames;	{
+- (void) pushClassNames:(NSArray*)classNames;	{
 	[_classNames addObjectsFromArray:classNames];	// TODO: Check for duplicates while debugging
 }
-- (void)pushClass:(id)classOrArray { [classOrArray isKindOfClass:NSArray.class] ? [self pushClassNames:classOrArray] : [self pushClassName:classOrArray]; }
+- (void) pushClass:(id)classOrArray { [classOrArray isKindOfClass:NSArray.class] ? [self pushClassNames:classOrArray] : [self pushClassName:classOrArray]; }
 
-- (void)pushAttribute:(NSString *)attribute value:(id)value;
+- (void) pushAttribute:(NSString*)attribute value:(id)value;
 {
 	if ([attribute isEqualToString:@"class"]) return [self pushClass:value];
 	if ([attribute isEqualToString:@"id"]) [_IDs addObject:value];			// Keep track of IDs in use
 	[super pushAttribute:attribute value:value];
 }
-- (KSXMLAttributes *)currentAttributes {		// Add in buffered class info
+- (KSXMLAttributes*)currentAttributes {		// Add in buffered class info
 
-	return self.currentElementClassName ? [(KSXMLAttributes *)super.currentAttributes addAttribute:@"class" value:self.class], super.currentAttributes
+	return self.currentElementClassName ? [(KSXMLAttributes*)super.currentAttributes addAttribute:@"class" value:self.class], super.currentAttributes
 													: super.currentAttributes;
 }
 
@@ -100,13 +102,13 @@ NSString
 
 #pragma mark HTML Fragments
 
-- (void)writeHTMLString:(NSString *)html withTerminatingNewline:(BOOL)terminatingNewline;
+- (void) writeHTMLString:(NSString*)html withTerminatingNewline:(BOOL)terminatingNewline;
 {
 	[self writeHTMLString:terminatingNewline  ? ![html hasSuffix:@"\n"] ? [html stringByAppendingString:@"\n"] : html
 						 									:  [html hasSuffix:@"\n"] ? [html substringToIndex:[html length] - 1] : html];
 }
 
-- (void)writeHTMLString:(NSString *)html;
+- (void) writeHTMLString:(NSString*)html;
 {
 	[self writeString: self.indentationLevel ?  [html stringByReplacingOccurrencesOfString:@"\n" withString:
 																[@"\n" stringByPaddingToLength:self.indentationLevel + 1 withString:@"\t" startingAtIndex:0]]
@@ -115,15 +117,15 @@ NSString
 
 #pragma mark General
 
-- (void)writeElement:(NSString *)name idName:(NSString *)idName className:(NSString *)className content:(void (^)(void))content;
+- (void) writeElement:(NSString*)name idName:(NSString*)idName className:(NSString*)className content:(void (^)(void))content;
 {
 	idName 			? [self pushAttribute:@"id" value:idName] 		: nil;
 	className		? [self pushAttribute:@"class" value:className] : nil;	[self writeElement:name content:content];
 }
 
-- (void)startElement:(NSString *)tgNme className:(NSString *)clsNme {	[self startElement:tgNme idName:nil className:clsNme]; }
+- (void) startElement:(NSString*)tgNme className:(NSString*)clsNme {	[self startElement:tgNme idName:nil className:clsNme]; }
 
-- (void)startElement:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+- (void) startElement:(NSString*)tagName idName:(NSString*)idName className:(NSString*)className;
 {
 	if (idName) [self pushAttribute:@"id" value:idName];
 	if (className) [self pushAttribute:@"class" value:className];
@@ -131,7 +133,7 @@ NSString
 	[self startElement:tagName];
 }
 
-- (BOOL)isIDValid:(NSString *)anID; // NO if the ID has already been used
+- (BOOL)isIDValid:(NSString*)anID; // NO if the ID has already been used
 {
 	BOOL result = ![_IDs containsObject:anID];
 	return result;
@@ -139,7 +141,7 @@ NSString
 
 #pragma mark Document
 
-- (void)writeDocumentOfType:(NSString *)docType encoding:(NSStringEncoding)encoding head:(void (^)(void))headBlock body:(void (^)(void))bodyBlock;
+- (void) writeDocumentOfType:(NSString*)docType encoding:(NSStringEncoding)encoding head:(void (^)(void))headBlock body:(void (^)(void))bodyBlock;
 {
 	[self startDocumentWithDocType:docType encoding:encoding];
 
@@ -151,7 +153,7 @@ NSString
 
 #pragma mark Line Break
 
-- (void)writeLineBreak;
+- (void) writeLineBreak;
 {
 	[self startElement:@"br"];
 	[self endElement];
@@ -159,7 +161,7 @@ NSString
 
 #pragma mark Anchors
 
-- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+- (void) startAnchorElementWithHref:(NSString*)href title:(NSString*)titleString target:(NSString*)targetString rel:(NSString*)relString;
 {
 	// TODO: Remove this method once Sandvox no longer needs it
 	if (href) [self pushAttribute:@"href" value:href];
@@ -170,7 +172,8 @@ NSString
 	[self startElement:@"a"];
 }
 
-- (void)writeAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString content:(void (^)(void))content;
+- (void) writeAnchorElementWithHref:(NSString*)href       title:(NSString*)titleString
+                            target:(NSString*)targetString rel:(NSString*)relString content:(VBlk)content;
 {
 	NSParameterAssert(content);
 
@@ -181,8 +184,8 @@ NSString
 
 #pragma mark Images
 
-- (void)writeImageWithSrc:(NSString *)src
-                      alt:(NSString *)alt
+- (void) writeImageWithSrc:(NSString*)src
+                      alt:(NSString*)alt
                     width:(id)width
                    height:(id)height;
 {
@@ -197,11 +200,11 @@ NSString
 
 #pragma mark Link
 
-- (void)writeLinkWithHref:(NSString *)href
-                     type:(NSString *)type
-                      rel:(NSString *)rel
-                    title:(NSString *)title
-                    media:(NSString *)media;
+- (void) writeLinkWithHref:(NSString*)href
+                     type:(NSString*)type
+                      rel:(NSString*)rel
+                    title:(NSString*)title
+                    media:(NSString*)media;
 {
 	if (rel) [self pushAttribute:@"rel" value:rel];
 	if (type) [self pushAttribute:@"type" value:type];
@@ -213,35 +216,35 @@ NSString
 	[self endElement];
 }
 
-- (void)writeLinkToStylesheet:(NSString *)href
-                        title:(NSString *)title
-                        media:(NSString *)media;
+- (void) writeLinkToStylesheet:(NSString*)href
+                        title:(NSString*)title
+                        media:(NSString*)media;
 {
 	[self writeLinkWithHref:href type:@"text/css" rel:@"stylesheet" title:title media:media];
 }
 
 #pragma mark Scripts
 
-- (void)writeJavascriptWithSrc:(NSString *)src encoding:(NSStringEncoding)encoding;
+- (void) writeJavascriptWithSrc:(NSString*)src encoding:(NSStringEncoding)encoding;
 {
 	// According to the HTML spec, charset only needs to be specified if the script is a different encoding to the document
 	NSString *charset = nil;
 	if (encoding != [self encoding])
 	{
-		charset = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(encoding));
+		charset = (NSString*)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(encoding));
 	}
 
 	[self writeJavascriptWithSrc:src charset:charset];
 }
 
-- (void)writeJavascriptWithSrc:(NSString *)src charset:(NSString *)charset;	// src may be nil
+- (void) writeJavascriptWithSrc:(NSString*)src charset:(NSString*)charset;	// src may be nil
 {
 	if (charset) [self pushAttribute:@"charset" value:charset];
 	[self startJavascriptElementWithSrc:src];
 	[self endElement];
 }
 
-- (void)writeJavascript:(NSString *)script useCDATA:(BOOL)useCDATA;
+- (void) writeJavascript:(NSString*)script useCDATA:(BOOL)useCDATA;
 {
 	[self writeJavascriptWithContent:^{
 
@@ -251,7 +254,7 @@ NSString
 	}];
 }
 
-- (void)writeJavascriptWithContent:(void (^)(void))content;
+- (void) writeJavascriptWithContent:(void (^)(void))content;
 {
 	[self startJavascriptElementWithSrc:nil];
 	content();
@@ -259,7 +262,7 @@ NSString
 	[self endElement];
 }
 
-- (void)startJavascriptElementWithSrc:(NSString *)src;  // src may be nil
+- (void) startJavascriptElementWithSrc:(NSString*)src;  // src may be nil
 {
 	// HTML5 doesn't need the script type specified, but older doc types do for standards-compliance
 	if (![[self docType] isEqualToString:KSHTMLWriterDocTypeHTML_5])
@@ -288,14 +291,14 @@ NSString
 	}
 }
 
-- (void)startJavascriptCDATA;
+- (void) startJavascriptCDATA;
 {
 	[self writeString:@"\n/* "];
 	[self startCDATA];
 	[self writeString:@" */"];
 }
 
-- (void)endJavascriptCDATA;
+- (void) endJavascriptCDATA;
 {
 	[self writeString:@"\n/* "];
 	[self endCDATA];
@@ -304,7 +307,7 @@ NSString
 
 #pragma mark Param
 
-- (void)writeParamElementWithName:(NSString *)name value:(NSString *)value;
+- (void) writeParamElementWithName:(NSString*)name value:(NSString*)value;
 {
 	if (name) [self pushAttribute:@"name" value:name];
 	if (value) [self pushAttribute:@"value" value:value];
@@ -314,14 +317,14 @@ NSString
 
 #pragma mark Style
 
-- (void)writeStyleElementWithCSSString:(NSString *)css;
+- (void) writeStyleElementWithCSSString:(NSString*)css;
 {
 	[self startStyleElementWithType:@"text/css"];
 	[self writeString:css]; // browsers don't expect styles to be XML escaped
 	[self endElement];
 }
 
-- (void)startStyleElementWithType:(NSString *)type;
+- (void) startStyleElementWithType:(NSString*)type;
 {
 	if (type) [self pushAttribute:@"type" value:type];
 	[self startElement:@"style"];
@@ -339,7 +342,7 @@ NSString
 	return [self.class elementIsList:[self topElement]];
 }
 
-+ (BOOL)elementIsList:(NSString *)element;
++ (BOOL)elementIsList:(NSString*)element;
 {
 	BOOL result = ([element isEqualToString:@"ul"] ||
 						[element isEqualToString:@"ol"]);
@@ -348,7 +351,7 @@ NSString
 
 #pragma mark (X)HTML
 
-- (BOOL)elementCanBeEmpty:(NSString *)tagName;
+- (BOOL)elementCanBeEmpty:(NSString*)tagName;
 {
 	static NSSet *emptyTags;
 	static dispatch_once_t onceToken;
@@ -371,7 +374,7 @@ NSString
 	return [emptyTags containsObject:tagName];
 }
 
-+ (BOOL)shouldPrettyPrintElementInline:(NSString *)elementName;
++ (BOOL)shouldPrettyPrintElementInline:(NSString*)elementName;
 {
 	switch ([elementName length])
 	{
@@ -441,7 +444,7 @@ NSString
 	return [super shouldPrettyPrintElementInline:elementName];
 }
 
-- (BOOL)validateElement:(NSString *)element;
+- (BOOL)validateElement:(NSString*)element;
 {
 	if (![super validateElement:element]) return NO;
 
@@ -456,7 +459,7 @@ NSString
 	}
 }
 
-- (NSString *)validateAttribute:(NSString *)name value:(NSString *)value ofElement:(NSString *)element;
+- (NSString*)validateAttribute:(NSString*)name value:(NSString*)value ofElement:(NSString*)element;
 {
 	NSString *result = [super validateAttribute:name value:value ofElement:element];
 	if (!result) return nil;
@@ -472,7 +475,7 @@ NSString
 
 #pragma mark Element Primitives
 
-- (void)startElement:(NSString *)elementName writeInline:(BOOL)writeInline; // for more control
+- (void) startElement:(NSString*)elementName writeInline:(BOOL)writeInline; // for more control
 {
 #ifdef DEBUG
 	NSAssert1([elementName isEqualToString:[elementName lowercaseString]], @"Attempt to start non-lowercase element: %@", elementName);
@@ -490,7 +493,7 @@ NSString
 	[super startElement:elementName writeInline:writeInline];
 }
 
-- (void)closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
+- (void) closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
 {
 	if ([self isXHTML])
 	{

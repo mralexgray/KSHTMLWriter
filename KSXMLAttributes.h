@@ -34,12 +34,12 @@
     NSMutableArray  *_attributes;
 }
 
-- (id)initWithXMLAttributes:(KSXMLAttributes *)info;
+- (id)initWithXMLAttributes:(KSXMLAttributes*)info;
 
 // Unlike NSDictionary, no protection is provided against duplicate keys, to improve performance. If you do add the same key twice, it will appear twice while enumerating, but which value is reported for it is indeterminate
-- (void)addAttribute:(NSString *)attribute value:(id)value;
+- (void) addAttribute:(NSString*)attribute value:(id)value;
 
-- (void)close;  // removes all attributes
+- (void) close;  // removes all attributes
 
 
 @end

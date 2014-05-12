@@ -34,14 +34,14 @@
 - (void) writeElement:(NSString*)name className:(NSString*)className content:(void(^)(void))content;
 - (void) writeElement:(NSString*)name 	  idName:(NSString*)idName content:(void(^)(void))content;
 
-- (void)writeElement:(NSString*)name    idName:(NSString*)idName 								  	text:(NSString*)text;
-- (void)writeElement:(NSString*)name className:(NSString*)className				      	  	text:(NSString*)text;
-- (void)writeElement:(NSString*)name  	 idName:(NSString*)idName className:(NSString*)cls text:(NSString*)text;
+- (void) writeElement:(NSString*)name    idName:(NSString*)idName 								  	text:(NSString*)text;
+- (void) writeElement:(NSString*)name className:(NSString*)className				      	  	text:(NSString*)text;
+- (void) writeElement:(NSString*)name  	 idName:(NSString*)idName className:(NSString*)cls text:(NSString*)text;
 
-- (void)writeElementAndClose:(NSString*)name;
-- (void)writeElementAndClose:(NSString*)name 						  		 className:(NSString*)className;
-- (void)writeElementAndClose:(NSString*)name idName:(NSString*)idName;
-- (void)writeElementAndClose:(NSString*)name idName:(NSString*)idName className:(NSString*)className;
+- (void) writeElementAndClose:(NSString*)name;
+- (void) writeElementAndClose:(NSString*)name 						  		 className:(NSString*)className;
+- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idName;
+- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idName className:(NSString*)className;
 
 - (void) writeHorizontalLine;
 

@@ -8,11 +8,11 @@
 
 #import "KSHTMLWriterSnippetTests.h"
 
-#import <WebKit/WebView.h>
+#import <WebKit/WebKit.h>
 
 @implementation KSHTMLWriterSnippetTests
 
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+- (void) webView:(WebView*)sender didFinishLoadForFrame:(WebFrame*)frame
 {
     [self timeToExitRunLoop];
 }    

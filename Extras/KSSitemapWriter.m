@@ -59,7 +59,7 @@ NSUInteger const KSSitemapIndexMaxFileSize = 10485760;
     return self;
 }
 
-- (void)writeURL:(NSURL *)loc modificationDate:(NSDate *)lastMod changeFrequency:(NSString *)changeFreq priority:(NSNumber *)priority;
+- (void) writeURL:(NSURL*)loc modificationDate:(NSDate*)lastMod changeFrequency:(NSString*)changeFreq priority:(NSNumber*)priority;
 {
     [_writer writeElement:@"url" content:^{
         [_writer writeElement:@"loc" text:[loc absoluteString]];
@@ -78,14 +78,14 @@ NSUInteger const KSSitemapIndexMaxFileSize = 10485760;
     }];
 }
 
-- (void)close;
+- (void) close;
 {
     [_writer endElement];   // </urlset>
     [_writer close];
     [_writer release]; _writer = nil;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     [self close];   // releases _writer
     [super dealloc];
@@ -113,7 +113,7 @@ NSUInteger const KSSitemapIndexMaxFileSize = 10485760;
     return self;
 }
 
-- (void)writeSitemapWithLocation:(NSURL *)loc modificationDate:(NSDate *)lastMod;
+- (void) writeSitemapWithLocation:(NSURL*)loc modificationDate:(NSDate*)lastMod;
 {
     [_writer writeElement:@"sitemap" content:^{
         [_writer writeElement:@"loc" text:[loc absoluteString]];
@@ -129,14 +129,14 @@ NSUInteger const KSSitemapIndexMaxFileSize = 10485760;
     }];
 }
 
-- (void)close;
+- (void) close;
 {
     [_writer endElement];   // </urlset>
     [_writer close];
     [_writer release]; _writer = nil;
 }
 
-- (void)dealloc
+- (void) dealloc
 {
     [self close];   // releases _writer
     [super dealloc];

@@ -51,13 +51,13 @@ extern NSUInteger const KSSitemapMaxFileSize;
 - (id)initWithOutputWriter:(id <KSWriter>)output;
 
 // URL is compulsary; all else optional
-- (void)writeURL:(NSURL *)loc           // should be sub-path of the folder containing the sitemap. avoid exceeding KSSitemapMaxURLLength
-modificationDate:(NSDate *)lastMod
- changeFrequency:(NSString *)changeFreq
-        priority:(NSNumber *)priority;  // between 0 and 1. If nil, search engines assume 0.5
+- (void) writeURL:(NSURL*)loc           // should be sub-path of the folder containing the sitemap. avoid exceeding KSSitemapMaxURLLength
+modificationDate:(NSDate*)lastMod
+ changeFrequency:(NSString*)changeFreq
+        priority:(NSNumber*)priority;  // between 0 and 1. If nil, search engines assume 0.5
 
 // Call when done writing URLs to properly end the XML document
-- (void)close;
+- (void) close;
 
 @end
 
@@ -78,9 +78,9 @@ extern NSUInteger const KSSitemapIndexMaxFileSize; // 10MB
 - (id)initWithOutputWriter:(id <KSWriter>)output;
 
 // URL is compulsary; all else optional
-- (void)writeSitemapWithLocation:(NSURL *)loc modificationDate:(NSDate *)lastMod;
+- (void) writeSitemapWithLocation:(NSURL*)loc modificationDate:(NSDate*)lastMod;
 
 // Call when done writing sitemaps to properly end the XML document
-- (void)close;
+- (void) close;
 
 @end

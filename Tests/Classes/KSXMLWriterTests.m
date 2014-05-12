@@ -35,25 +35,25 @@
 
 @implementation KSXMLWriterTests
 
-- (void)setUp
+- (void) setUp
 {
     output = [[KSStringWriter alloc] init];
     writer = [[KSXMLWriter alloc] initWithOutputWriter:output];
 }
 
-- (void)tearDown
+- (void) tearDown
 {
     [output release];
     [writer release];
 }
 
-- (void)testNoAction
+- (void) testNoAction
 {
     NSString* generated = [output string];
     STAssertTrue([generated isEqualToString:@""], @"generated string is empty");
 }
 
-- (void)testWriteElementNoContent
+- (void) testWriteElementNoContent
 {
     [writer writeElement:@"foo" attributes:nil content:nil];
     
@@ -61,7 +61,7 @@
     [self assertString:generated matchesString:@"<foo />"];
 }
 
-- (void)testWriteElementEmptyContent
+- (void) testWriteElementEmptyContent
 {
     [writer writeElement:@"foo" attributes:nil content:^{
     }];
@@ -70,7 +70,7 @@
     [self assertString:generated matchesString:@"<foo />"];
 }
 
-- (void)testWriteElementNoAttributes
+- (void) testWriteElementNoAttributes
 {
     [writer writeElement:@"foo" attributes:nil content:^{
          [writer writeCharacters:@"bar"];
@@ -80,7 +80,7 @@
     [self assertString:generated matchesString:@"<foo>bar</foo>"];
 }
 
-- (void)testWriteElementEmptyAttributes
+- (void) testWriteElementEmptyAttributes
 {
     NSDictionary* attributes = [NSDictionary dictionary];
     [writer writeElement:@"foo" attributes:attributes content:^{
@@ -91,7 +91,7 @@
     [self assertString:generated matchesString:@"<foo>bar</foo>"];
 }
 
-- (void)testWriteElementOneAttribute
+- (void) testWriteElementOneAttribute
 {
     NSDictionary* attributes = [NSDictionary dictionaryWithObject:@"wibble" forKey:@"wobble"];
     [writer writeElement:@"foo" attributes:attributes content:^{
@@ -102,7 +102,7 @@
     [self assertString:generated matchesString:@"<foo wobble=\"wibble\">bar</foo>"];
 }
 
-- (void)testWriteElementMultipleAttributes
+- (void) testWriteElementMultipleAttributes
 {
     NSDictionary* attributes = [NSDictionary dictionaryWithObjectsAndKeys:@"o1", @"k1", @"o2", @"k2", nil];
     [writer writeElement:@"foo" attributes:attributes content:^{
@@ -113,7 +113,7 @@
     [self assertString:generated matchesString:@"<foo k2=\"o2\" k1=\"o1\">bar</foo>"];
 }
 
-- (void)testPushAttribute
+- (void) testPushAttribute
 {
     [writer pushAttribute:@"a1" value:@"v1"];
     STAssertTrue([writer hasCurrentAttributes], @"has attributes");
@@ -138,7 +138,7 @@
     STAssertEquals(attributeCount, (NSUInteger) 0, @"wrong number of attributes");
 }
 
-- (void)testWriteEscapedEntities
+- (void) testWriteEscapedEntities
 {
     // TODO could expand this to include a list of all entities
     [writer writeElement:@"foo" attributes:nil content:^{
@@ -153,7 +153,7 @@
     [self assertString:escaped matchesString:@"&lt; &amp; &gt;"];
 }
 
-- (void)testWriteEscapedNonAsciiCharacters
+- (void) testWriteEscapedNonAsciiCharacters
 {
     // TODO could expand this to loop through all characters, but some of them will expand
     // to unexpected things - e.g. see character 160 below...
@@ -173,7 +173,7 @@
     
 }
 
-- (void)testWriteComment
+- (void) testWriteComment
 {
     // TODO could expand this to include a list of all entities
     [writer writeElement:@"foo" attributes:nil content:^{
@@ -186,7 +186,7 @@
     [self assertString:generated matchesString:@"<foo><!--this is a comment-->this is not a comment<!--this is another comment--></foo>"];
 }
 
-- (void)testStartDocument
+- (void) testStartDocument
 {
     [writer startDocumentWithDocType:@"some-type" encoding:NSUTF8StringEncoding];
     [writer writeElement:@"foo" attributes:nil content:^{

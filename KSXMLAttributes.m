@@ -51,7 +51,7 @@
     return nil;
 }
 
-- (NSEnumerator *)keyEnumerator;
+- (NSEnumerator*)keyEnumerator;
 {
     NSMutableArray *keys = [[NSMutableArray alloc] initWithCapacity:[self count]];
     
@@ -77,7 +77,7 @@
     return self;
 }
 
-- (id)initWithXMLAttributes:(KSXMLAttributes *)info;
+- (id)initWithXMLAttributes:(KSXMLAttributes*)info;
 {
     if (self = [super init])    // call super, so _attributes is still nil
     {
@@ -86,14 +86,14 @@
     return self;
 }
 
-- (void)dealloc;
+- (void) dealloc;
 {
     [_attributes release];
     
     [super dealloc];
 }
 
-- (void)setAttributesAsDictionary:(NSDictionary *)dictionary;
+- (void) setAttributesAsDictionary:(NSDictionary*)dictionary;
 {
     for (NSString *anAttribute in dictionary)
     {
@@ -101,7 +101,7 @@
     }
 }
 
-- (void)addAttribute:(NSString *)attribute value:(id)value;
+- (void) addAttribute:(NSString*)attribute value:(id)value;
 {
     NSParameterAssert(value);
     
@@ -111,14 +111,14 @@
     [_attributes addObject:value];
 }
 
-- (void)close;
+- (void) close;
 {
     [_attributes removeAllObjects];
 }
 
 #pragma mark NSCopying
 
-- (id)copyWithZone:(NSZone *)zone;
+- (id)copyWithZone:(NSZone*)zone;
 {
     return [[[KSXMLAttributes class] alloc] initWithXMLAttributes:self];
 }

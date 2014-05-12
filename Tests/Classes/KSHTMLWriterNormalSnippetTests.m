@@ -13,7 +13,7 @@
 #import "KSXMLWriterDOMAdaptor.h"
 
 #import <SenTestingKit/SenTestingKit.h>
-#import <WebKit/WebView.h>
+#import <WebKit/WebKit.h>
 
 @interface KSHTMLWriterNormalSnippetTests : KSHTMLWriterSnippetTests
 
@@ -31,7 +31,7 @@
     return @"html";
 }
 
-- (void)testWritingSnippetsWithWriterClass:(Class)klass
+- (void) testWritingSnippetsWithWriterClass:(Class)klass
 {
     NSURL* snippetURL = self.parameterisedTestDataItem;
 
@@ -61,12 +61,12 @@
 
 #pragma mark - Tests
 
-- (void)parameterisedTestWritingSnippetWithHTMLWriter
+- (void) parameterisedTestWritingSnippetWithHTMLWriter
 {
     [self testWritingSnippetsWithWriterClass:[KSHTMLWriter class]];
 }
 
-- (void)parameterisedTestWritingSnippetWithXMLWriter
+- (void) parameterisedTestWritingSnippetWithXMLWriter
 {
     [self testWritingSnippetsWithWriterClass:[KSXMLWriter class]];
 }

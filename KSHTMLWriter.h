@@ -162,10 +162,9 @@ extern NSString 	*KSHTMLWriterDocTypeHTML_4_01_Strict,			*KSHTMLWriterDocTypeHTM
 
 @end
 
-#ifdef ATOZFRAMEWORK
 
 #import <Foundation/Foundation.h>
-#import <WebKit/WebKit.h>
+#import <WebKit/WebView.h>
 
 
 // CSS
@@ -192,4 +191,3 @@ extern NSString 	*KSHTMLWriterDocTypeHTML_4_01_Strict,			*KSHTMLWriterDocTypeHTM
 #import "KSStringWriter.h"
 #import "KSWriter.h"
 
-#endif

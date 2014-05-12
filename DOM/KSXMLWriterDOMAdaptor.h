@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 //
 
-#import <WebKit/WebKit.h>
+
 #import "KSXMLWriter.h"
 
 
@@ -36,6 +36,7 @@ typedef NS_OPTIONS(NSInteger, KSXMLWriterDOMAdaptorOptions) {
 
 
 @protocol KSXMLWriterDOMAdaptorDelegate;
+@class DOMNode, DOMElement, DOMRange, DOMComment, DOMText;
 @interface KSXMLWriterDOMAdaptor : NSObject
 {
   @private

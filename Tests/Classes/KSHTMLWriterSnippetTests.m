@@ -8,7 +8,7 @@
 
 #import "KSHTMLWriterSnippetTests.h"
 
-#import <WebKit/WebKit.h>
+#import <WebKit/WebView.h>
 
 @implementation KSHTMLWriterSnippetTests
 

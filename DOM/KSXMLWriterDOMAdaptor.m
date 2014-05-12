@@ -26,6 +26,7 @@
 
 #import "KSXMLWriterDOMAdaptor.h"
 
+#import <WebKit/WebKit.h>
 #import "KSHTMLWriter.h"
 
 

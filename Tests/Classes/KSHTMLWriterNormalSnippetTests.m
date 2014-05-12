@@ -13,7 +13,7 @@
 #import "KSXMLWriterDOMAdaptor.h"
 
 #import <SenTestingKit/SenTestingKit.h>
-#import <WebKit/WebKit.h>
+#import <WebKit/WebView.h>
 
 @interface KSHTMLWriterNormalSnippetTests : KSHTMLWriterSnippetTests
 

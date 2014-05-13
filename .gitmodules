@@ -4,3 +4,6 @@
 [submodule "Tests/ECUnitTests"]
 	path = Tests/ECUnitTests
 	url = git://github.com/elegantchaos/ECUnitTests.git
+[submodule "Kit"]
+	path = Kit
+	url = https://github.com/mralexgray/Kit.git

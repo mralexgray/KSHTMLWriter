@@ -17,7 +17,10 @@ extern NSString 	*KSHTMLWriterDocTypeHTML_4_01_Strict,       *KSHTMLWriterDocTyp
 
 typedef void (^VBlk)(void);
 
-#define NEWWRITER(X) KSHTMLWriter *X = [KSHTMLWriter newWriter:NSMutableString.new]
+#define NEWWRITER(WRITER,STRINGVAR) \
+NSMutableString* STRINGVAR = NSMutableString.new; KSHTMLWriter *WRITER = [KSHTMLWriter newWriter:STRINGVAR]
+
+#define KSWRITE(X) [KSHTMLWriter.newWriter writeHTMLString:X]
 
 + (instancetype) newWriter:(id<KSWriter>)o;
 
@@ -36,42 +39,40 @@ typedef void (^VBlk)(void);
 #pragma mark CSS Class Name
 // Class names are accumulated and written automatically as an attribute of the next element started
 // You can also push a class name using -pushAttribute:value: if attribute is 'class'
-- (void) pushClassName:(NSString*)className;
+- (void)  pushClassName:(NSString*)className;
 - (void) pushClassNames:(NSArray*)classNames;
-- (void) pushClass:(id)classOrArray;
+- (void)      pushClass:(id)classOrArray;
 
 #pragma mark HTML Fragments
-// Any newlines in the HTML will be adjusted to account for current indentation level, but that's all
-// Terminating newline character will be added or removed if needed, as according to terminatingNewline argument
-- (void) writeHTMLString:(NSString*)html withTerminatingNewline:(BOOL)terminatingNewline;
+/*! Any newlines in the HTML will be adjusted to account for current indentation level, but that's all
+    Terminating newline character will be added or removed if needed, as according to terminatingNewline argument */
+- (void) writeHTMLString:(NSString*)html withTerminatingNewline:(BOOL)termNL;
 - (void) writeHTMLString:(NSString*)html;
-
 
 #pragma mark General
 
-//  <tagName id="idName" class="className">
-//  Pretty standard convenience methods
+/*!  <tagName id="idName" class="className">  Pretty standard convenience methods */
 - (void) startElement:(NSString*)tagName                       className:(NSString*)c;
 - (void) startElement:(NSString*)tagName idName:(NSString*)idN className:(NSString*)c;
 - (void) writeElement:(NSString*)name    idName:(NSString*)idN className:(NSString*)c content:(VBlk)c;
 
-- (BOOL)isIDValid:(NSString*)anID; // NO if the ID has already been used
+- (BOOL)    isIDValid:(NSString*)anID; // NO if the ID has already been used
 
 #pragma mark Document
-// Convenience to give you standard document structure. head is optional
-- (void) writeDocumentOfType:(NSString*)dType encoding:(NSStringEncoding)e head:(VBlk)headBlock
-                                                                          body:(VBlk)bodyBlock;
+/*! Convenience to give you standard document structure. head is optional */
+- (void) writeDocumentOfType:(NSString*)dType encoding:(NSStringEncoding)e
+                        head:(VBlk)headBlock      body:(VBlk)bodyBlock;
 #pragma mark Line Break
-// <br />   OR  <br> - depends on isXHTML
-- (void) writeLineBreak;
+
+- (void) writeLineBreak; // <br />   OR  <br> - depends on isXHTML
 
 #pragma mark Links
 //  <a href="...." target="..." rel="nofollow">
 - (void) writeAnchorElementWithHref:(NSString*)href
-                             title:(NSString*)titString
-                            target:(NSString*)trgtString
-                               rel:(NSString*)relString
-                           content:(VBlk)c; // a block must provided - an empty anchor doesn't make sense!
+                              title:(NSString*)titString
+                             target:(NSString*)trgtString
+                                rel:(NSString*)relString
+                            content:(VBlk)c; // a block must provided - an empty anchor doesn't make sense!
 
 #pragma mark Images
 //  <img src="..." alt="..." width="..." height="..." />
@@ -82,15 +83,15 @@ typedef void (^VBlk)(void);
 
 #pragma mark - <link> Goes in <head> to link to scripts, CSS, etc.
 - (void) writeLinkWithHref:(NSString*)href
-                     type:(NSString*)type
-                      rel:(NSString*)rel
-                    title:(NSString*)title
-                    media:(NSString*)media;
+                      type:(NSString*)type
+                       rel:(NSString*)rel
+                     title:(NSString*)title
+                     media:(NSString*)media;
 
 // Note: If a title is set, it is considered an *alternate* stylesheet. http://www.alistapart.com/articles/alternate/
 - (void) writeLinkToStylesheet:(NSString*)href
-                        title:(NSString*)title
-                        media:(NSString*)media;
+                         title:(NSString*)title
+                         media:(NSString*)media;
 #pragma mark Scripts
 
 - (void)     writeJavascriptWithSrc:(NSString*)src encoding:(NSStringEncoding)encoding;

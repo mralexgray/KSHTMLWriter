@@ -1,28 +1,3 @@
-//
-//  KSXMLWriterDOMAdaptor.m
-//  Sandvox
-//
-//  Created by Mike Abdullah on 25/06/2010.
-//  Copyright © 2010 Karelia Software
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//
 
 #import "KSXMLWriterDOMAdaptor.h"
 
@@ -33,28 +8,20 @@
 @interface DOMNode (KSDOMToHTMLWriter)
 
 // All nodes can be written. We just don't really want to expose this implementation detail. DOMElement uses it to recurse down through element contents.
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer;
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
-
-- (void) ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
-
-- (BOOL)ks_isDescendantOfDOMNode:(DOMNode*)possibleAncestor;
+- (DOMNode*)         ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer;
+- (DOMNode*)         ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
+- (void)          ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
+- (BOOL) ks_isDescendantOfDOMNode:(DOMNode*)possibleAncestor;
 
 @end
 
+@implementation KSXMLWriterDOMAdaptor @synthesize XMLWriter = _writer, options = _options;
 
-#pragma mark -
-
-
-@implementation KSXMLWriterDOMAdaptor
-
-- (id)initWithXMLWriter:(KSXMLWriter*)writer;
-{
+- (id)initWithXMLWriter:(KSXMLWriter*)writer {
     return [self initWithXMLWriter:writer options:NSXMLNodeOptionsNone];
 }
 
-- (id)initWithXMLWriter:(KSXMLWriter*)writer options:(KSXMLWriterDOMAdaptorOptions)options;
-{
+- (id)initWithXMLWriter:(KSXMLWriter*)writer options:(KSXMLWriterDOMAdaptorOptions)options {
     if (self = [self init])
     {
         _writer = [writer retain];
@@ -62,15 +29,12 @@
     }
     return self;
 }
-
-- (void) dealloc;
-{
+- (void) dealloc {
     [_writer release];
     [super dealloc];
 }
 
-@synthesize XMLWriter = _writer;
-@synthesize options = _options;
+
 
 #pragma mark Convenience
 
@@ -241,7 +205,6 @@
 
 #pragma mark -
 
-
 @implementation DOMNode (KSDOMToHTMLWriter)
 
 - (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer;
@@ -319,8 +282,7 @@
 
 @implementation DOMElement (KSDOMToHTMLWriter)
 
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor;
-{
+- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor {
     //  *Elements* are where the clever recursion starts, so switch responsibility back to the writer.
     DOMNode *node = [adaptor willWriteDOMElement:self];
     if (node == self)
@@ -334,7 +296,6 @@
         return node;
     }
 }
-
 - (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor fromRange:(DOMRange*)range;
 {
     // Bit of a special case. When a DOM range ends at the start of an element 
@@ -552,3 +513,29 @@
 }
 
 @end
+
+//
+//  KSXMLWriterDOMAdaptor.m
+//  Sandvox
+//
+//  Created by Mike Abdullah on 25/06/2010.
+//  Copyright © 2010 Karelia Software
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//

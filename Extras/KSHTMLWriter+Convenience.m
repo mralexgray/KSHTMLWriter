@@ -11,7 +11,6 @@
 	[self pushAttribute:@"href" value:href];
 	[self writeElement:@"a" content:content];
 }
-
 - (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs text:(NSString*)text {
 
 	[attrs enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) { [self pushAttribute:key value:obj];	}];

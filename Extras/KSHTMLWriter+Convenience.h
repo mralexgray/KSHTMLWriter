@@ -1,3 +1,28 @@
+
+#import "KSHTMLWriter.h"
+
+@interface KSHTMLWriter (Convenience)
+
+- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs content:(void(^)(void))c;
+- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs 	 text:(NSString*)text;
+
+- (void) writeElement:(NSString*)name   classes:(NSArray*)classes content:(void(^)(void))c;
+- (void) writeElement:(NSString*)name 	 idName:(NSString*)idName content:(void(^)(void))c;
+- (void) writeElement:(NSString*)name className:(NSString*)classN content:(void(^)(void))c;
+
+- (void) writeElement:(NSString*)name    idName:(NSString*)idN     	text:(NSString*)t;
+- (void) writeElement:(NSString*)name className:(NSString*)cNm	  	text:(NSString*)t;
+- (void) writeElement:(NSString*)name  	 idName:(NSString*)idN className:(NSString*)cls text:(NSString*)text;
+
+- (void) writeElementAndClose:(NSString*)name;
+- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idN;
+- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idN className:(NSString*)cNm;
+- (void) writeElementAndClose:(NSString*)name 						          className:(NSString*)cNm;
+
+- (void) writeHorizontalLine;
+
+@end
+
 //
 //  KSHTMLWriter+Convenience.h
 //
@@ -22,27 +47,3 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
-
-#import "KSHTMLWriter.h"
-
-@interface KSHTMLWriter (Convenience)
-
-- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs content:(void(^)(void))content;
-- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs 	 text:(NSString*)text;
-
-- (void) writeElement:(NSString*)name classes:(NSArray*)classes content:(void(^)(void))content;
-- (void) writeElement:(NSString*)name className:(NSString*)className content:(void(^)(void))content;
-- (void) writeElement:(NSString*)name 	  idName:(NSString*)idName content:(void(^)(void))content;
-
-- (void) writeElement:(NSString*)name    idName:(NSString*)idName 								  	text:(NSString*)text;
-- (void) writeElement:(NSString*)name className:(NSString*)className				      	  	text:(NSString*)text;
-- (void) writeElement:(NSString*)name  	 idName:(NSString*)idName className:(NSString*)cls text:(NSString*)text;
-
-- (void) writeElementAndClose:(NSString*)name;
-- (void) writeElementAndClose:(NSString*)name 						  		 className:(NSString*)className;
-- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idName;
-- (void) writeElementAndClose:(NSString*)name idName:(NSString*)idName className:(NSString*)className;
-
-- (void) writeHorizontalLine;
-
-@end

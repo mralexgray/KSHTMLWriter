@@ -71,9 +71,14 @@
 		271963ED1691C95000CCBA0B /* KSBlockWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 271963EA1691C95000CCBA0B /* KSBlockWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		271963EE1691C95000CCBA0B /* KSBlockWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271963EB1691C95000CCBA0B /* KSBlockWriter.m */; };
 		271963EF1691C95000CCBA0B /* KSBlockWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271963EB1691C95000CCBA0B /* KSBlockWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		7B417DEF1928A9730056D78F /* AssetCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B417DE81928A9730056D78F /* AssetCollection.h */; };
+		7B417DF11928A9730056D78F /* Bootstrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B417DEA1928A9730056D78F /* Bootstrap.h */; };
+		7B417DF31928A9730056D78F /* JsonElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B417DEC1928A9730056D78F /* JsonElement.h */; };
 		7BA254AF17D1AE8C00D44066 /* KSHTMLWriter+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BC3C1B817D175980070E9DE /* KSHTMLWriter+Convenience.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7BA254B017D1AE9700D44066 /* KSHTMLWriter+Convenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC3C1B717D175980070E9DE /* KSHTMLWriter+Convenience.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7BA254B117D1AE9800D44066 /* KSHTMLWriter+Convenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BC3C1B717D175980070E9DE /* KSHTMLWriter+Convenience.h */; };
+		7BCB42DD1922CA5700904BC8 /* LPEngineKIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCB42DA1922CA5700904BC8 /* LPEngineKIT.h */; };
+		7BCB42DE1922CA5700904BC8 /* LPEngineKIT.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BCB42DA1922CA5700904BC8 /* LPEngineKIT.h */; };
 		9FC4242E15F57A0F001B9220 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22352B9314C6FCB00031F5DD /* Cocoa.framework */; };
 		9FC4243415F57A0F001B9220 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FC4243215F57A0F001B9220 /* InfoPlist.strings */; };
 		9FC4243D15F5801E001B9220 /* KSCSSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 22352BC114C6FD260031F5DD /* KSCSSWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -185,10 +190,19 @@
 		22C91F4914F7BEED00FCFF8F /* test-common.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "test-common.sh"; sourceTree = "<group>"; };
 		271963EA1691C95000CCBA0B /* KSBlockWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSBlockWriter.h; sourceTree = "<group>"; };
 		271963EB1691C95000CCBA0B /* KSBlockWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSBlockWriter.m; sourceTree = "<group>"; };
+		7B417DE81928A9730056D78F /* AssetCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AssetCollection.h; path = ../../AtoZ/Core/AssetCollection.h; sourceTree = "<group>"; };
+		7B417DE91928A9730056D78F /* AssetCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AssetCollection.m; path = ../../AtoZ/Core/AssetCollection.m; sourceTree = "<group>"; };
+		7B417DEA1928A9730056D78F /* Bootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bootstrap.h; path = ../../AtoZ/Models/Bootstrap.h; sourceTree = "<group>"; };
+		7B417DEB1928A9730056D78F /* Bootstrap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bootstrap.m; path = ../../AtoZ/Models/Bootstrap.m; sourceTree = "<group>"; };
+		7B417DEC1928A9730056D78F /* JsonElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsonElement.h; path = ../../AtoZ/Models/JsonElement.h; sourceTree = "<group>"; };
+		7B417DED1928A9730056D78F /* JsonElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JsonElement.m; path = ../../AtoZ/Models/JsonElement.m; sourceTree = "<group>"; };
 		7BC3C1B717D175980070E9DE /* KSHTMLWriter+Convenience.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KSHTMLWriter+Convenience.h"; sourceTree = "<group>"; };
 		7BC3C1B817D175980070E9DE /* KSHTMLWriter+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "KSHTMLWriter+Convenience.m"; sourceTree = "<group>"; };
 		7BC3C1B917D175980070E9DE /* KSSitemapWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KSSitemapWriter.h; sourceTree = "<group>"; };
 		7BC3C1BA17D175980070E9DE /* KSSitemapWriter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KSSitemapWriter.m; sourceTree = "<group>"; };
+		7BCB42DA1922CA5700904BC8 /* LPEngineKIT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPEngineKIT.h; sourceTree = "<group>"; };
+		7BCB42DB1922CA5700904BC8 /* LPEngineKIT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPEngineKIT.m; sourceTree = "<group>"; };
+		7BCB42DC1922CA5700904BC8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		7BCDC124182A428300C9AE23 /* Mac-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Mac-Framework.xcconfig"; path = "/a2z/xcconfigs/Mac OS X/Mac-Framework.xcconfig"; sourceTree = "<absolute>"; };
 		9FC4242D15F57A0F001B9220 /* KSHTMLWriter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KSHTMLWriter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC4243115F57A0F001B9220 /* KSHTMLWriterFramework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KSHTMLWriterFramework-Info.plist"; sourceTree = "<group>"; };
@@ -231,6 +245,7 @@
 		22352B8514C6FCAF0031F5DD = {
 			isa = PBXGroup;
 			children = (
+				7BCB42D91922CA5600904BC8 /* Kit */,
 				22352BBF14C6FD260031F5DD /* CSS */,
 				22352BC214C6FD260031F5DD /* DOM */,
 				7BC3C1B617D175980070E9DE /* Extras */,
@@ -507,9 +522,24 @@
 			path = Scripts;
 			sourceTree = "<group>";
 		};
+		7B417DEE1928A9730056D78F /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				7B417DE81928A9730056D78F /* AssetCollection.h */,
+				7B417DE91928A9730056D78F /* AssetCollection.m */,
+				7B417DEA1928A9730056D78F /* Bootstrap.h */,
+				7B417DEB1928A9730056D78F /* Bootstrap.m */,
+				7B417DEC1928A9730056D78F /* JsonElement.h */,
+				7B417DED1928A9730056D78F /* JsonElement.m */,
+			);
+			name = HTML;
+			path = ../../../AtoZ/AtoZ;
+			sourceTree = "<group>";
+		};
 		7BC3C1B617D175980070E9DE /* Extras */ = {
 			isa = PBXGroup;
 			children = (
+				7B417DEE1928A9730056D78F /* HTML */,
 				7BC3C1B717D175980070E9DE /* KSHTMLWriter+Convenience.h */,
 				7BC3C1B817D175980070E9DE /* KSHTMLWriter+Convenience.m */,
 				7BC3C1B917D175980070E9DE /* KSSitemapWriter.h */,
@@ -517,6 +547,16 @@
 			);
 			path = Extras;
 			sourceTree = SOURCE_ROOT;
+		};
+		7BCB42D91922CA5600904BC8 /* Kit */ = {
+			isa = PBXGroup;
+			children = (
+				7BCB42DA1922CA5700904BC8 /* LPEngineKIT.h */,
+				7BCB42DB1922CA5700904BC8 /* LPEngineKIT.m */,
+				7BCB42DC1922CA5700904BC8 /* README.md */,
+			);
+			path = Kit;
+			sourceTree = "<group>";
 		};
 		9FC4243015F57A0F001B9220 /* Framework Supporting Files */ = {
 			isa = PBXGroup;
@@ -546,6 +586,7 @@
 				22352BD614C6FD260031F5DD /* KSHTMLWriter.h in Headers */,
 				22352BD814C6FD260031F5DD /* KSStringXMLEntityEscaping.h in Headers */,
 				22352BDA14C6FD260031F5DD /* KSXMLAttributes.h in Headers */,
+				7BCB42DD1922CA5700904BC8 /* LPEngineKIT.h in Headers */,
 				22352BDC14C6FD260031F5DD /* KSXMLWriter.h in Headers */,
 				22C1943E14C6FE9D009A4406 /* KSBufferedWriter.h in Headers */,
 				22C1944014C6FE9D009A4406 /* KSForwardingWriter.h in Headers */,
@@ -565,14 +606,18 @@
 				9FC4244A15F5804A001B9220 /* KSCSSWriter.h in Headers */,
 				9FC4244B15F5804A001B9220 /* KSXMLWriterDOMAdaptor.h in Headers */,
 				9FC4244C15F5804A001B9220 /* KSHTMLWriter.h in Headers */,
+				7B417DEF1928A9730056D78F /* AssetCollection.h in Headers */,
 				9FC4244D15F5804A001B9220 /* KSStringXMLEntityEscaping.h in Headers */,
 				9FC4244E15F5804A001B9220 /* KSBufferedWriter.h in Headers */,
+				7BCB42DE1922CA5700904BC8 /* LPEngineKIT.h in Headers */,
 				9FC4244F15F5804A001B9220 /* KSForwardingWriter.h in Headers */,
 				9FC4245015F5804A001B9220 /* KSMutableDataWriter.h in Headers */,
 				9FC4245115F5804A001B9220 /* KSOutputStreamWriter.h in Headers */,
 				9FC4245215F5804A001B9220 /* KSStringWriter.h in Headers */,
+				7B417DF31928A9730056D78F /* JsonElement.h in Headers */,
 				9FC4245315F5804A001B9220 /* KSWriter.h in Headers */,
 				9FC4245415F5804A001B9220 /* KSXMLAttributes.h in Headers */,
+				7B417DF11928A9730056D78F /* Bootstrap.h in Headers */,
 				9FC4245515F5804A001B9220 /* KSXMLWriter.h in Headers */,
 				271963ED1691C95000CCBA0B /* KSBlockWriter.h in Headers */,
 				7BA254B017D1AE9700D44066 /* KSHTMLWriter+Convenience.h in Headers */,

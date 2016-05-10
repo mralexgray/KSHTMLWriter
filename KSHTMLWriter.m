@@ -25,6 +25,8 @@
 
 #import "KSHTMLWriter.h"
 #import "KSXMLAttributes.h"
+#import <WebKit/WebKit.h>
+
 
 NSString
 *KSHTMLWriterDocTypeHTML_4_01_Strict 			= @"HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"",
@@ -46,13 +48,13 @@ NSString
 
 - (id)initWithOutputWriter:(id <KSWriter>)output;	{
 
-	self = [super initWithOutputWriter:output]; if (!self) return nil;
+	if (!(self = [super initWithOutputWriter:output])) return nil;
 	[self setDocType:KSHTMLWriterDocTypeHTML_5];
 	_IDs = NSMutableSet.new; _classNames = NSMutableArray.new; return  self;
 }
 
 - (id)initWithOutputWriter:(id <KSWriter>)output docType:(NSString*)docType encoding:(NSStringEncoding)encoding;	{
-	self = [self initWithOutputWriter:output encoding:encoding]; if (!self) return nil;
+	if (!(self = [self initWithOutputWriter:output encoding:encoding])) return nil;
 	[self setDocType:docType];
 	return self;
 }
@@ -61,9 +63,15 @@ NSString
 
 #pragma mark DTD
 
-- (void) startDocumentWithDocType:(NSString*)dType encoding:(NSStringEncoding)enc { [self setDocType:dType]; [super startDocumentWithDocType:dType encoding:enc]; }
+- (void) startDocumentWithDocType:(NSString*)dType encoding:(NSStringEncoding)enc {
 
-- (void) setDocType:(NSString*)docType;	{    docType = [docType copy]; [_docType release]; _docType = docType; _isXHTML = [self.class isDocTypeXHTML:docType]; }
+  [self setDocType:dType]; [super startDocumentWithDocType:dType encoding:enc];
+}
+
+//- (void) setDocType:(NSString*)docType;	{
+//
+//  docType = [docType copy]; [_docType release]; _docType = docType; _isXHTML = [self.class isDocTypeXHTML:docType];
+//}
 - (BOOL)isXHTML; { return _isXHTML; }
 + (BOOL)isDocTypeXHTML:(NSString*)docType;
 {

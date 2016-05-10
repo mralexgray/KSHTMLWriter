@@ -34,7 +34,7 @@
         [self runUntilTimeToExit];
    }
     
-    return [result autorelease];
+    return result;
 }
 
 +(NSString*)snippetsPath

@@ -25,9 +25,29 @@
 
 #import "KSCSSWriter.h"
 
+#define JSC_OBJC_API_ENABLED 1
+
+#import <JavaScriptCore/JavaScriptCore.h>
+// #import <WebKit/WebKit.h>
+//
+
+
+//#import <JavascriptCore/JSContext.h>
+//#import <JavascriptCore/JSVirtualMachine.h>
+//
 
 @implementation KSCSSWriter
 
+- (void) writeStyleDictionary:(NSDictionary *)d {
+
+  static JSContext *j; static JSVirtualMachine *vm; vm = vm ?: ({
+
+    [j = [JSContext.alloc initWithVirtualMachine:vm = JSVirtualMachine.new] evaluateScript:@""];
+
+//    [ eva ]vm;
+    vm;
+  });
+}
 - (void) writeCSSString:(NSString*)cssString;
 {
     [self writeString:cssString];
@@ -51,3 +71,7 @@
 }
 
 @end
+
+
+static __unused NSString * JSONtoCSS = @"";
+

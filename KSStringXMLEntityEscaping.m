@@ -31,7 +31,6 @@
 @end
 
 
-#pragma mark -
 
 
 @implementation NSString (KSStringXMLEntityEscaping)
@@ -79,7 +78,6 @@
 @end
 
 
-#pragma mark -
 
 
 @implementation KSEscapedXMLEntitiesWriter

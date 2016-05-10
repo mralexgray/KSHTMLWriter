@@ -3,12 +3,20 @@
 
 @interface KSHTMLWriter (Convenience)
 
-- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs content:(void(^)(void))c;
-- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs 	 text:(NSString*)text;
+- (void) writeLinkToStylesheet:(NSString*)href;
+- (void) writeLinkToStylesheets:(NSArray*)sheets;
 
-- (void) writeElement:(NSString*)name   classes:(NSArray*)classes content:(void(^)(void))c;
-- (void) writeElement:(NSString*)name 	 idName:(NSString*)idName content:(void(^)(void))c;
-- (void) writeElement:(NSString*)name className:(NSString*)classN content:(void(^)(void))c;
+
+- (void) writeFormat:(NSString*)fmt, ...;
+- (void) writeDocReady:(NSString*)first, ...;
+
+
+- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs content:(VBlk)c;
+- (void) writeLink:(NSString*)href attributes:(NSDictionary*)attrs 	  text:(NSString*)text;
+
+- (void) writeElement:(NSString*)name   classes:(NSArray*)classes content:(VBlk)c;
+- (void) writeElement:(NSString*)name 	 idName:(NSString*)idName content:(VBlk)c;
+- (void) writeElement:(NSString*)name className:(NSString*)classN content:(VBlk)c;
 
 - (void) writeElement:(NSString*)name    idName:(NSString*)idN     	text:(NSString*)t;
 - (void) writeElement:(NSString*)name className:(NSString*)cNm	  	text:(NSString*)t;

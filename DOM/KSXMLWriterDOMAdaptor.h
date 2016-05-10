@@ -88,7 +88,6 @@ typedef NS_OPTIONS(NSInteger, KSXMLWriterDOMAdaptorOptions) {
 @end
 
 
-#pragma mark -
 
 
 @protocol KSXMLWriterDOMAdaptorDelegate <NSObject>

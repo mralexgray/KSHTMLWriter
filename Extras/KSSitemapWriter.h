@@ -62,7 +62,6 @@ modificationDate:(NSDate*)lastMod
 @end
 
 
-#pragma mark -
 
 
 extern NSUInteger const KSSitemapIndexMaxNumberOfSitemaps;    // the FAQ <http://www.sitemaps.org/faq.html> claims 1,000 as the limit, but the protocol spec and everything else disagrees

@@ -38,8 +38,7 @@
 
 #pragma mark Convenience
 
-+ (NSString*)outerHTMLOfDOMElement:(DOMElement*)element;
-{
++ (NSString*)outerHTMLOfDOMElement:(DOMElement*)element {
     NSMutableString *result = [NSMutableString string];
     KSHTMLWriter *htmlWriter = [[KSHTMLWriter alloc] initWithOutputWriter:result];
     KSXMLWriterDOMAdaptor *adaptor = [[self alloc] initWithXMLWriter:htmlWriter];
@@ -52,9 +51,7 @@
     
     return result;
 }
-
-+ (NSString*)outerXMLOfDOMElement:(DOMElement*)element options:(KSXMLWriterDOMAdaptorOptions)options;
-{
++ (NSString*)outerXMLOfDOMElement:(DOMElement*)element options:(KSXMLWriterDOMAdaptorOptions)options {
     NSMutableString *result = [NSMutableString string];
     KSXMLWriter *xmlWriter = [[KSXMLWriter alloc] initWithOutputWriter:result];
     KSXMLWriterDOMAdaptor *adaptor = [[self alloc] initWithXMLWriter:xmlWriter options:options];
@@ -70,28 +67,25 @@
 
 #pragma mark High Level
 
-- (void) writeDOMElement:(DOMElement*)element;  // like -outerHTML
-{
+- (void) writeDOMElement:(DOMElement*)element {
     [self startElement:[[element tagName] lowercaseString] withDOMElement:element];
     [self writeInnerOfDOMNode:element];
     [self endElementWithDOMElement:element];
-}
+}   // like -outerHTML
 
-- (void) writeInnerOfDOMNode:(DOMNode*)element;  // like -innerHTML
-{
+- (void) writeInnerOfDOMNode:(DOMNode*)element {
     [self writeInnerOfDOMNode:element startAtChild:[element firstChild]];
-}
+}  // like -innerHTML
 
-- (void) writeDOMRange:(DOMRange*)range;
-{
+- (void) writeDOMRange:(DOMRange*)range {
     DOMNode *ancestor = [range commonAncestorContainer];
     [ancestor ks_writeContent:self fromRange:range];
 }
 
+
 #pragma mark Implementation
 
-- (void) writeInnerOfDOMNode:(DOMNode*)element startAtChild:(DOMNode*)aNode;
-{
+- (void) writeInnerOfDOMNode:(DOMNode*)element startAtChild:(DOMNode*)aNode {
     // It's best to iterate using a Linked List-like approach in case the iteration also modifies the DOM
     while (aNode)
     {
@@ -99,8 +93,7 @@
     }
 }
 
-- (void) startElement:(NSString*)elementName withDOMElement:(DOMElement*)element;    // open the tag and write attributes
-{
+- (void) startElement:(NSString*)elementName withDOMElement:(DOMElement*)element {
     // Write attributes
     if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
     {
@@ -123,26 +116,22 @@
     {
         [[self XMLWriter] startElement:elementName writeInline:YES];
     }
-}
+}     // open the tag and write attributes
 
-- (DOMNode*)endElementWithDOMElement:(DOMElement*)element;    // returns the next sibling to write
-{
+- (DOMNode*)endElementWithDOMElement:(DOMElement*)element {
     [[self XMLWriter] endElement];
     return [element nextSibling];
-}
+} // returns the next sibling to write
 
-- (DOMNode*)writeComment:(NSString*)comment withDOMComment:(DOMComment*)commentNode;
-{
+- (DOMNode*)writeComment:(NSString*)comment withDOMComment:(DOMComment*)commentNode {
     [[self XMLWriter] writeComment:comment];
     return [commentNode nextSibling];
 }
 
 #pragma mark Pseudo-delegate
 
-- (DOMNode*)willWriteDOMText:(DOMText*)text; { return text; }
-
-- (DOMNode*)didWriteDOMText:(DOMText*)textNode nextNode:(DOMNode*)nextNode;
-{
+- (DOMNode*)    willWriteDOMText:(DOMText*)text;                                { return text; }
+- (DOMNode*)     didWriteDOMText:(DOMText*)textNode nextNode:(DOMNode*)nextNode {
     // Is the next node also text? If so, normalize by appending to textNode.
     if ([self options] & KSXMLWriterDOMAdaptorNormalize)
     {
@@ -183,9 +172,7 @@
     
     return nextNode;
 }
-
-- (DOMNode*)willWriteDOMElement:(DOMElement*)element
-{
+- (DOMNode*) willWriteDOMElement:(DOMElement*)element                           {
     if ([self delegate])
     {
         return [[self delegate] DOMAdaptor:self willWriteDOMElement:element];
@@ -202,13 +189,9 @@
 
 @end
 
-
-#pragma mark -
-
 @implementation DOMNode (KSDOMToHTMLWriter)
 
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer;
-{
+- (DOMNode*)    ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer {
     // Recurse through child nodes
     DOMNode *aNode = [self firstChild];
     while (aNode)
@@ -218,15 +201,11 @@
     
     return [self nextSibling];
 } 
-
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
-{
+- (DOMNode*)    ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range  {
     [self ks_writeContent:writer fromRange:range];
     return [self nextSibling];
 }
-
-- (void) ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
-{
+-     (void) ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range  {
     // If we begin outside the range, figure out the first child that actually belongs in the range
     DOMNode *aNode = [self firstChild];
     
@@ -261,9 +240,7 @@
         aNode = nextNode;
     }
 }
-
-- (BOOL)ks_isDescendantOfDOMNode:(DOMNode*)possibleAncestor;
-{
+-     (BOOL)      ks_isDescendantOfDOMNode:(DOMNode*)possibleAncestor {
     DOMNode *aNode = self;
     while (aNode)
     {
@@ -275,11 +252,6 @@
 }
 
 @end
-
-
-#pragma mark -
-
-
 @implementation DOMElement (KSDOMToHTMLWriter)
 
 - (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor {
@@ -296,8 +268,7 @@
         return node;
     }
 }
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor fromRange:(DOMRange*)range;
-{
+- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor fromRange:(DOMRange*)range {
     // Bit of a special case. When a DOM range ends at the start of an element 
     if ([range endContainer] == self && [range endOffset] == 0)
     {
@@ -325,6 +296,7 @@
     
     return result;
 }
+
 /*
  - (void) writeCleanedHTMLToContext:(KSDOMToHTMLWriter*)writer innards:(BOOL)writeInnards;
  {
@@ -371,15 +343,9 @@
  }
  */
 @end
-
-
-#pragma mark -
-
-
 @implementation DOMCharacterData (KSDOMToHTMLWriter)
 
-- (DOMNode*)writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor;
-{
+- (DOMNode*) writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor {
     /*  The text to write is passed in (rather than calling [self data]) so as to handle writing a subset of it
      */
     
@@ -452,15 +418,12 @@
     [[adaptor XMLWriter] writeCharacters:data];
     return [super ks_writeHTML:adaptor];
 }
-
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer;
-{
+- (DOMNode*)                           ks_writeHTML:(KSXMLWriterDOMAdaptor*)writer  {
     DOMNode *result = [self writeData:[self data] toHTMLWriter:writer];
     return result;
 }
 
-- (void) ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range;
-{
+-     (void) ks_writeContent:(KSXMLWriterDOMAdaptor*)writer fromRange:(DOMRange*)range {
     // Character data treats that text as its content. This is so you can specify a substring using the offsets in DOMRange
     NSString *text = [self data];
     
@@ -477,22 +440,16 @@
 }
 
 @end
-
-
 @implementation DOMComment (KSDOMToHTMLWriter)
 
-- (DOMNode*)writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor;
-{
+- (DOMNode*)writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor {
 	return [adaptor writeComment:data withDOMComment:self];
 }
 
 @end
-
-
 @implementation DOMText (KSDOMToHTMLWriter)
 
-- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor;
-{
+- (DOMNode*)ks_writeHTML:(KSXMLWriterDOMAdaptor*)adaptor {
     DOMNode *result = [adaptor willWriteDOMText:self];
     if (result != self) return result;
     
@@ -503,11 +460,9 @@
 }
 
 @end
-
 @implementation DOMCDATASection (KSDOMToHTMLWriter)
 
-- (DOMNode*)writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor;
-{
+- (DOMNode*)writeData:(NSString*)data toHTMLWriter:(KSXMLWriterDOMAdaptor*)adaptor {
 	[[adaptor XMLWriter] writeString:[NSString stringWithFormat:@"<![CDATA[%@]]>", data]];
     return [self nextSibling];
 }

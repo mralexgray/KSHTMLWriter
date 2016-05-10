@@ -7,8 +7,9 @@
 //
 
 #import "ECParameterisedTestCase.h"
-#import "KSXMLWriter.h"
-#import "KSStringWriter.h"
+@import KSHTMLWriter;
+//#import "KSXMLWriter.h"
+//#import "KSStringWriter.h"
 
 #pragma mark - KSXMLWriter Interface Shenanigans
 
@@ -39,12 +40,6 @@
 {
     output = [[KSStringWriter alloc] init];
     writer = [[KSXMLWriter alloc] initWithOutputWriter:output];
-}
-
-- (void) tearDown
-{
-    [output release];
-    [writer release];
 }
 
 - (void) testNoAction

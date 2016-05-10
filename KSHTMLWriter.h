@@ -7,12 +7,12 @@ extern NSString 	*KSHTMLWriterDocTypeHTML_4_01_Strict,       *KSHTMLWriterDocTyp
                   *KSHTMLWriterDocTypeXHTML_1_1,              *KSHTMLWriterDocTypeHTML_5;
 
 
-@interface KSHTMLWriter : KSXMLWriter	{
-  @private
-    BOOL            _isXHTML;
-    NSString        *_docType;
-    NSMutableSet    *_IDs;
-    NSMutableArray  *_classNames;
+@interface KSHTMLWriter : KSXMLWriter	{ @private
+
+              BOOL   _isXHTML;
+          NSString * _docType;
+      NSMutableSet * _IDs;
+    NSMutableArray * _classNames;
 }
 
 typedef void (^VBlk)(void);
@@ -26,10 +26,15 @@ NSMutableString* STRINGVAR = NSMutableString.new; KSHTMLWriter *WRITER = [KSHTML
 
 #pragma mark Creating an HTML Writer
 // if you desperately need to set a dtype b4 calling -startDocument:isXHTML: (perhaps because you're not going to call it!)
-- (id)initWithOutputWriter:(id <KSWriter>)output docType:(NSString*)docType encoding:(NSStringEncoding)encoding;
+- (id)initWithOutputWriter:(id<KSWriter>)output docType:(NSString*)KSHTMLWriterDocType encoding:(NSStringEncoding)enc;
+
+#pragma mark Document
+/*! Convenience to give you standard document structure. head is optional */
+- (void) writeDocumentOfType:(NSString*)KSHTMLWriterDocType encoding:(NSStringEncoding)e
+                        head:(VBlk)headBlock                    body:(VBlk)bodyBlock;
 
 #pragma mark DTD
-@property(nonatomic, copy, readonly) NSString *docType; // Default is HTML5
+@property(copy, readonly) NSString *docType; // Default is HTML5
 
 // Whether empty elements should be written as <FOO> or <FOO />
 // Default is YES. There's no setter method; instead, specify with -startDocumentWithDocType:encoding: or when initializing.
@@ -58,10 +63,6 @@ NSMutableString* STRINGVAR = NSMutableString.new; KSHTMLWriter *WRITER = [KSHTML
 
 - (BOOL)    isIDValid:(NSString*)anID; // NO if the ID has already been used
 
-#pragma mark Document
-/*! Convenience to give you standard document structure. head is optional */
-- (void) writeDocumentOfType:(NSString*)dType encoding:(NSStringEncoding)e
-                        head:(VBlk)headBlock      body:(VBlk)bodyBlock;
 #pragma mark Line Break
 
 - (void) writeLineBreak; // <br />   OR  <br> - depends on isXHTML
@@ -127,7 +128,10 @@ NSMutableString* STRINGVAR = NSMutableString.new; KSHTMLWriter *WRITER = [KSHTML
 
 
 #import <Foundation/Foundation.h>
-#import <WebKit/WebKit.h>
+
+
+#import "JSONEntity.h"
+
 // CSS
 #import "KSCSSWriter.h"
 // DOM

@@ -7,3 +7,6 @@
 [submodule "Kit"]
 	path = Kit
 	url = https://github.com/mralexgray/Kit.git
+[submodule "CSSJSON"]
+	path = CSSJSON
+	url = https://github.com/mralexgray/CSSJSON.git

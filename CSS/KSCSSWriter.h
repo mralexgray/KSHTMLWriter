@@ -27,7 +27,9 @@
 
 
 @interface KSCSSWriter : KSForwardingWriter
- 
+
+
+- (void)  writeStyleDictionary: (NSDictionary*)d;
 // Writes the string followed enough newlines to carry on writing
 - (void) writeCSSString:(NSString*)cssString;
 

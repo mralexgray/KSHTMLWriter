@@ -94,7 +94,6 @@ NSUInteger const KSSitemapIndexMaxFileSize = 10485760;
 @end
 
 
-#pragma mark -
 
 
 @implementation KSSitemapIndexWriter

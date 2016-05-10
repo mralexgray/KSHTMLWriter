@@ -8,7 +8,7 @@
 
 #import "ECParameterisedTestCase.h"
 #import "KSXMLWriter.h"
-#import "KSHTMLWriter.h"
+//#import "KSHTMLWriter.h"
 #import "KSStringWriter.h"
 
 #pragma mark - Unit Tests Interface

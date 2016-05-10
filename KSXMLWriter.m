@@ -58,7 +58,6 @@
 @end
 
 
-#pragma mark -
 
 
 @implementation KSXMLWriter
@@ -682,7 +681,6 @@ static NSCharacterSet *sCharactersToEntityEscapeWithoutQuot;
 @end
 
 
-#pragma mark -
 
 
 @implementation KSXMLAttributes (KSXMLWriter)

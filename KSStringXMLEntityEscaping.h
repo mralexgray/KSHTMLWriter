@@ -41,7 +41,6 @@
 @end
 
 
-#pragma mark -
 
 
 // Simply passes through strings, but escapes them first
